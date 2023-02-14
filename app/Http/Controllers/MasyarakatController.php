@@ -36,6 +36,13 @@ class MasyarakatController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'nama_lengkap' => 'required',
+            'username' => 'required',
+            'password' => 'required',
+            'telp' => 'required',
+        ]);
+
         $input = $request->all();
 
         Masyarakat::create($input);
@@ -53,7 +60,7 @@ class MasyarakatController extends Controller
     {
         $masyarakat = Masyarakat::where('id', $id)->first();
         if ($masyarakat) {
-            return view('auction.detail', compact('masyarakat'));
+            return view('VMasyarakat', compact('masyarakat'));
         } else {
             return response()->view(404);
         }
@@ -77,11 +84,16 @@ class MasyarakatController extends Controller
      * @param  \App\Models\Masyarakat  $masyarakat
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Masyarakat $masyarakat)
+    public function update(Request $request, $id)
     {
-        $input = $request->all();
+        $request->validate([
+            'nama_lengkap' => 'required',
+            'username' => 'required',
+            'telp' => 'required',
+        ]);
+        $input = $request->except(['_token', '_method' ]);
 
-        Masyarakat::where('id', $masyarakat->id)->update($input);
+        Masyarakat::where('id_user', $id)->update($input);
 
         return redirect()->route('masyarakat.index');
     }
@@ -92,9 +104,9 @@ class MasyarakatController extends Controller
      * @param  \App\Models\Masyarakat  $masyarakat
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Masyarakat $masyarakat, $id)
+    public function destroy($id)
     {
-        $masyarakat->where('id', $id)->delete();
+        Masyarakat::where('id_user', $id)->delete();
      
         return redirect()->route('masyarakat.index');
     }

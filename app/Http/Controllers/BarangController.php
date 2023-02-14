@@ -14,7 +14,8 @@ class BarangController extends Controller
      */
     public function index()
     {
-        //
+        $barang = Barang::get();
+        return view('VBarang', compact('barang'));
     }
 
     /**
@@ -35,7 +36,19 @@ class BarangController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nama_barang' => 'required',
+            'tgl' => 'required',
+            'harga_awal' => 'required',
+            'deskripsi_barang' => 'required',
+            'status_barang' => 'required',
+        ]);
+
+        $input = $request->all();
+
+        Barang::create($input);
+
+        return redirect()->route('barang.index');
     }
 
     /**
@@ -44,9 +57,14 @@ class BarangController extends Controller
      * @param  \App\Models\Barang  $barang
      * @return \Illuminate\Http\Response
      */
-    public function show(Barang $barang)
+    public function show(Barang $id)
     {
-        //
+        $barang = Barang::where('id', $id)->first();
+        if ($barang) {
+            return view('VBarang', compact('barang'));
+        } else {
+            return response()->view(404);
+        }
     }
 
     /**
@@ -67,9 +85,20 @@ class BarangController extends Controller
      * @param  \App\Models\Barang  $barang
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Barang $barang)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'nama_barang' => 'required',
+            'tgl' => 'required',
+            'harga_awal' => 'required',
+            'deskripsi_barang' => 'required',
+            'status_barang' => 'required',
+        ]);
+        $input = $request->except(['_token', '_method' ]);
+
+        Barang::where('id_barang', $id)->update($input);
+
+        return redirect()->route('barang.index');
     }
 
     /**
@@ -78,8 +107,10 @@ class BarangController extends Controller
      * @param  \App\Models\Barang  $barang
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Barang $barang)
+    public function destroy($id)
     {
-        //
+        Barang::where('id_barang', $id)->delete();
+     
+        return redirect()->route('barang.index');
     }
 }

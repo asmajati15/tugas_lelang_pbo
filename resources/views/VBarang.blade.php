@@ -15,22 +15,24 @@
               <thead>
                 <tr>
                   <th>No</th>
-                  <th>Nama Lengkap</th>
-                  <th>Username</th>
-                  <th>Telepon</th>
+                  <th>Nama Barang</th>
+                  <th>Tanggal Berakhir</th>
+                  <th>Harga Awal</th>
+                  <th>Status Barang</th>
                   <th></th>
                 </tr>
               </thead>
               <tbody>
-                @foreach ($masyarakat as $item)
+                @foreach ($barang as $item)
                 <tr>
                     <td>{{$loop->iteration}}</td>
-                    <td>{{$item->nama_lengkap}}</td>
-                    <td>{{$item->username}}</td>
-                    <td>{{$item->telp}}</td>
+                    <td>{{$item->nama_barang}}</td>
+                    <td>{{$item->tgl}}</td>
+                    <td>{{$item->harga_awal}}</td>
+                    <td>{{$item->status_barang}}</td>
                     <td>
-                        <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#UpdateModal" data-url="{{ route('masyarakat.update',['masyarakat'=>$item->id_user]) }}" data-nama_lengkap="{{ $item->nama_lengkap }}" data-username="{{ $item->username }}" data-password="{{ $item->password }}" data-telp="{{ $item->telp }}">Update</a>
-                        <form action="{{ route('masyarakat.destroy',['masyarakat'=>$item->id_user]) }}" method="post" class="d-inline-block">
+                        <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#UpdateModal" data-url="{{ route('barang.update',['barang'=>$item->id_barang]) }}" data-nama_lengkap="{{ $item->nama_lengkap }}" data-tgl="{{ $item->tgl }}" data-password="{{ $item->password }}" data-harga_awal="{{ $item->harga_awal }}" data-status_barang="{{ $item->status_barang }}">Update</a>
+                        <form action="{{ route('barang.destroy',['barang'=>$item->id_barang]) }}" method="post" class="d-inline-block">
                           @csrf
                           @method('DELETE')
                           <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this item?');">Delete</button>
@@ -49,44 +51,57 @@
   <div class="modal fade" id="AddModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <form action="{{ route('masyarakat.store') }}" method="post" enctype="multipart/form-data">
+            <form action="{{ route('barang.store') }}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-header">
-                    <h5 class="modal-title">Tambah Masyarakat</h5>
+                    <h5 class="modal-title">Tambah Barang</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="row mb-3">
-                        <label class="form-label">Nama Lengkap</label>
-                        <input type="text" class="form-control @error('nama_lengkap') is-invalid @enderror" name="nama_lengkap" value="{{ old('nama_lengkap') }}">
-                        @error('nama_lengkap')
+                        <label class="form-label">Nama Barang</label>
+                        <input type="text" class="form-control @error('nama_barang') is-invalid @enderror" name="nama_barang" value="{{ old('nama_barang') }}">
+                        @error('nama_barang')
                         <div class="invalid-feedback">
                             {{ $message }}
                         </div>
                         @enderror
                     </div>
                     <div class="row mb-3">
-                        <label class="form-label">Username</label>
-                        <input type="text" class="form-control @error('username') is-invalid @enderror" name="username"  value="{{ old('username') }}">
-                        @error('username')
+                        <label class="form-label">Deskripsi Barang</label>
+                        <input type="text" class="form-control @error('deskripsi_barang') is-invalid @enderror" name="deskripsi_barang" value="{{ old('deskripsi_barang') }}">
+                        @error('deskripsi_barang')
                         <div class="invalid-feedback">
                             {{ $message }}
                         </div>
                         @enderror
                     </div>
                     <div class="row mb-3">
-                        <label class="form-label">Password</label>
-                        <input type="password" class="form-control @error('password') is-invalid @enderror" name="password"  value="{{ old('password') }}">
-                        @error('password')
+                        <label class="form-label">Tanggal Berakhir</label>
+                        <input type="date" class="form-control @error('tgl') is-invalid @enderror" name="tgl"  value="{{ old('tgl') }}">
+                        @error('tgl')
                         <div class="invalid-feedback">
                             {{ $message }}
                         </div>
                         @enderror
                     </div>
                     <div class="row mb-3">
-                        <label class="form-label">Telepon</label>
-                        <input type="text" class="form-control @error('telp') is-invalid @enderror" name="telp"  value="{{ old('telp') }}">
-                        @error('telp')
+                        <label class="form-label">Harga Awal</label>
+                        <input type="number" class="form-control @error('harga_awal') is-invalid @enderror" name="harga_awal"  value="{{ old('harga_awal') }}">
+                        @error('harga_awal')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                        @enderror
+                    </div>
+                    <div class="row mb-3">
+                        <label class="form-label">Status Barang</label>
+                        <select class="form-select @error('status_barang') is-invalid @enderror" name="status_barang">
+                          <option selected hidden>--Pilih status barang--</option>
+                          <option value="1">Tersedia</option>
+                          <option value="2">Terjual</option>
+                        </select>
+                        @error('status_barang')
                         <div class="invalid-feedback">
                             {{ $message }}
                         </div>
@@ -115,7 +130,7 @@
   $('#UpdateModal').on('shown.bs.modal', function(e) {
     var html = `
         <div class="modal-header">
-            <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Masyarakat</h1>
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Edit barang</h1>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <form action="${$(e.relatedTarget).data('url')}" method="POST">
@@ -128,13 +143,13 @@
                         placeholder="name@example.com">
                 </div>
                 <div class="mb-3">
-                    <label for="exampleFormControlInput1" class="form-label">Username</label>
-                    <input type="text" name="username" value="${$(e.relatedTarget).data('username')}" class="form-control" id="exampleFormControlInput1"
+                    <label for="exampleFormControlInput1" class="form-label">tgl</label>
+                    <input type="text" name="tgl" value="${$(e.relatedTarget).data('tgl')}" class="form-control" id="exampleFormControlInput1"
                         placeholder="name@example.com">
                 </div>
                 <div class="mb-3">
                     <label for="exampleFormControlInput1" class="form-label">Nama Lengkap</label>
-                    <input type="text" name="telp" value="${$(e.relatedTarget).data('telp')}" class="form-control" id="exampleFormControlInput1"
+                    <input type="text" name="harga_awal" value="${$(e.relatedTarget).data('harga_awal')}" class="form-control" id="exampleFormControlInput1"
                         placeholder="name@example.com">
                 </div>
             </div>

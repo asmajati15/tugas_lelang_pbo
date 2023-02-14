@@ -10,4 +10,12 @@ class Barang extends Model
     use HasFactory;
 
     protected $table = 'tb_barang';
+
+    protected $guarded = ['id_barang'];
+
+    public function lelang(){
+
+        return $this->belongsTo(lelang::class);
+
+    }
 }

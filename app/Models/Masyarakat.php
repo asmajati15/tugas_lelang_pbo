@@ -10,4 +10,6 @@ class Masyarakat extends Model
     use HasFactory;
 
     protected $table = 'tb_masyarakat';
+
+    protected $guarded = ['id_user'];
 }
