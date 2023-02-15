@@ -19,6 +19,7 @@ class HistoryController extends Controller
         try {
             History::insert([
                 'id_lelang' => $request->id_lelang,
+                'id_user' => $request->id_user,
                 'penawaran_harga' => $request->penawaran_harga
             ]);
             return redirect()->back()->with(['message'=>'data berhasil di update','status'=>'success']);

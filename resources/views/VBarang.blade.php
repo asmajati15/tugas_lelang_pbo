@@ -159,8 +159,11 @@
                 </div>
                 <div class="mb-3">
                     <label for="exampleFormControlInput1" class="form-label">Status Barang</label>
-                    <input type="text" name="status_barang" value="${$(e.relatedTarget).data('status_barang')}" class="form-control" id="exampleFormControlInput1"
-                        placeholder="name@example.com">
+                    <select class="form-select @error('status_barang') is-invalid @enderror" name="status_barang">
+                          <option selected hidden>--Pilih status barang--</option>
+                          <option value="1">Tersedia</option>
+                          <option value="2">Terjual</option>
+                    </select>
                 </div>
             </div>
             <div class="modal-footer">
