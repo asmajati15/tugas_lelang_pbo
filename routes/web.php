@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MasyarakatController;
 use App\Http\Controllers\BarangController;
+use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\LelangController;
 
 /*
@@ -31,4 +32,5 @@ Route::post('/barang', [BarangController::class, 'store'])->name('barang.store')
 Route::put('/barang/{barang}', [BarangController::class, 'update'])->name('barang.update');
 Route::delete('/barang/{barang}', [BarangController::class, 'destroy'])->name('barang.destroy');
 Route::get('/lelang', [LeLangController::class, 'index'])->name('lelang.index');
-Route::post('/lelang', [LeLangController::class, 'newBids'])->name('lelang.store');
+Route::get('/history', [HistoryController::class, 'index'])->name('history.index');
+Route::post('/history', [HistoryController::class, 'store'])->name('history.store');

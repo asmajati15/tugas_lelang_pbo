@@ -171,5 +171,13 @@
         `;
     $('#modal-content').html(html);
   });
+
+  @if(session()->has('success'))
+    Swal.fire(
+    'Success',
+    '{{ session('success') }}',
+    'success'
+    )
+  @endif
 </script>
 @endsection

@@ -48,7 +48,7 @@ class BarangController extends Controller
 
         Barang::create($input);
 
-        return redirect()->route('barang.index');
+        return redirect()->back()->with('success', 'Data berhasil ditambahkan!');
     }
 
     /**
