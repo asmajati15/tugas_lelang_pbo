@@ -31,7 +31,7 @@
                     <td>{{$item->harga_awal}}</td>
                     <td>{{$item->status_barang}}</td>
                     <td>
-                        <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#UpdateModal" data-url="{{ route('barang.update',['barang'=>$item->id_barang]) }}" data-nama_lengkap="{{ $item->nama_lengkap }}" data-tgl="{{ $item->tgl }}" data-password="{{ $item->password }}" data-harga_awal="{{ $item->harga_awal }}" data-status_barang="{{ $item->status_barang }}">Update</a>
+                        <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#UpdateModal" data-url="{{ route('barang.update',['barang'=>$item->id_barang]) }}" data-nama_barang="{{ $item->nama_barang }}" data-deskripsi_barang="{{ $item->deskripsi_barang }}" data-tgl="{{ $item->tgl }}" data-status_barang="{{ $item->status_barang }}" data-harga_awal="{{ $item->harga_awal }}" data-status_barang="{{ $item->status_barang }}">Update</a>
                         <form action="{{ route('barang.destroy',['barang'=>$item->id_barang]) }}" method="post" class="d-inline-block">
                           @csrf
                           @method('DELETE')
@@ -138,18 +138,28 @@
             @method('PUT')
             <div class="modal-body">
                 <div class="mb-3">
-                    <label for="exampleFormControlInput1" class="form-label">Nama Lengkap</label>
-                    <input type="text" name="nama_lengkap" value="${$(e.relatedTarget).data('nama_lengkap')}" class="form-control" id="exampleFormControlInput1"
+                    <label for="exampleFormControlInput1" class="form-label">Nama Barang</label>
+                    <input type="text" name="nama_barang" value="${$(e.relatedTarget).data('nama_barang')}" class="form-control" id="exampleFormControlInput1"
                         placeholder="name@example.com">
                 </div>
                 <div class="mb-3">
-                    <label for="exampleFormControlInput1" class="form-label">tgl</label>
+                    <label for="exampleFormControlInput1" class="form-label">Deskripsi Barang</label>
+                    <input type="text" name="deskripsi_barang" value="${$(e.relatedTarget).data('deskripsi_barang')}" class="form-control" id="exampleFormControlInput1"
+                        placeholder="name@example.com">
+                </div>
+                <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Tanggal</label>
                     <input type="text" name="tgl" value="${$(e.relatedTarget).data('tgl')}" class="form-control" id="exampleFormControlInput1"
                         placeholder="name@example.com">
                 </div>
                 <div class="mb-3">
-                    <label for="exampleFormControlInput1" class="form-label">Nama Lengkap</label>
+                    <label for="exampleFormControlInput1" class="form-label">Harga Awal</label>
                     <input type="text" name="harga_awal" value="${$(e.relatedTarget).data('harga_awal')}" class="form-control" id="exampleFormControlInput1"
+                        placeholder="name@example.com">
+                </div>
+                <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Status Barang</label>
+                    <input type="text" name="status_barang" value="${$(e.relatedTarget).data('status_barang')}" class="form-control" id="exampleFormControlInput1"
                         placeholder="name@example.com">
                 </div>
             </div>
