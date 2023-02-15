@@ -11,17 +11,13 @@ class LelangController extends Controller
 {
     public function index()
     {
-        $lelang = Lelang::with('barang')->get();
-        $barang = Barang::with('lelang')->get();
+        $lelang = Lelang::get();
+        $barang = Barang::get();
         return view('VLelang', compact('lelang', 'barang'));
     }
 
-    public function newBids(Request $request, $id_barang)
+    public function newBids(Request $request, Barang $id_barang)
     {
-        // $request->validate([
-        //     'bid_price' => 'required',
-        // ]);
-
         Lelang::create([
             'harga_akhir' => $request->harga_akhir,
             'id_barang' => $id_barang,

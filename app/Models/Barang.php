@@ -13,9 +13,9 @@ class Barang extends Model
 
     protected $guarded = ['id_barang'];
 
-    public function lelang(){
+    // public function lelang(){
 
-        return $this->belongsTo(lelang::class);
+    //     return $this->belongsTo(lelang::class);
 
-    }
+    // }
 }

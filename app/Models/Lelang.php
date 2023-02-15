@@ -13,9 +13,9 @@ class Lelang extends Model
 
     protected $guarded = ['id_lelang'];
 
-    public function barang(){
+    // public function barang(){
 
-        return $this->hasMany(Barang::class);
+    //     return $this->hasMany(Barang::class);
 
-    }
+    // }
 }
